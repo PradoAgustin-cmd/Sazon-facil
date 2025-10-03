@@ -1,0 +1,64 @@
+{
+  "placeholderImages": [
+    {
+      "id": "pasta-salad",
+      "description": "A vibrant pasta salad in a white bowl, with fresh vegetables.",
+      "imageUrl": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwYXN0YSUyMHNhbGFkfGVufDB8fHx8MTc1OTUxODkzMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pasta salad"
+    },
+    {
+      "id": "chicken-curry",
+      "description": "Aromatic chicken curry in a bowl, served with rice.",
+      "imageUrl": "https://images.unsplash.com/photo-1707448829764-9474458021ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjaGlja2VuJTIwY3Vycnl8ZW58MHx8fHwxNzU5NTA4Mjk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chicken curry"
+    },
+    {
+      "id": "vegan-tacos",
+      "description": "Colorful vegan tacos with fresh toppings on a wooden board.",
+      "imageUrl": "https://images.unsplash.com/photo-1690960681871-492aabd44a8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx2ZWdhbiUyMHRhY29zfGVufDB8fHx8MTc1OTUyMDQzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vegan tacos"
+    },
+    {
+      "id": "chocolate-cake",
+      "description": "A rich, decadent slice of chocolate cake on a plate.",
+      "imageUrl": "https://images.unsplash.com/photo-1576618148423-df549bcb6972?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjaG9jb2xhdGUlMjBjYWtlfGVufDB8fHx8MTc1OTQ4MDQyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chocolate cake"
+    },
+    {
+      "id": "avocado-toast",
+      "description": "Avocado toast with a poached egg on top.",
+      "imageUrl": "https://images.unsplash.com/photo-1623691752358-0be1e4235183?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhdm9jYWRvJTIwdG9hc3R8ZW58MHx8fHwxNzU5NTIwNDM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "avocado toast"
+    },
+    {
+      "id": "beef-stir-fry",
+      "description": "Sizzling beef and vegetable stir-fry in a wok.",
+      "imageUrl": "https://images.unsplash.com/photo-1591533832599-ec08deca1cb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxiZWVmJTIwc3Rpci1mcnl8ZW58MHx8fHwxNzU5NDQwNTIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beef stir-fry"
+    },
+    {
+      "id": "lentil-soup",
+      "description": "Hearty lentil soup in a rustic bowl with a spoon.",
+      "imageUrl": "https://images.unsplash.com/photo-1648455320791-a667c8aab7e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsZW50aWwlMjBzb3VwfGVufDB8fHx8MTc1OTQ5NTQ5OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "lentil soup"
+    },
+    {
+      "id": "berry-smoothie",
+      "description": "A vibrant purple berry smoothie in a glass jar.",
+      "imageUrl": "https://images.unsplash.com/photo-1600718374662-0483d2b9da44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxiZXJyeSUyMHNtb290aGllfGVufDB8fHx8MTc1OTUxMDE0NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "berry smoothie"
+    },
+    {
+      "id": "grilled-salmon",
+      "description": "Perfectly grilled salmon fillet with lemon and herbs.",
+      "imageUrl": "https://images.unsplash.com/photo-1509402308-817902776267?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxncmlsbGVkJTIwc2FsbW9ufGVufDB8fHx8MTc1OTQ3NjI0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "grilled salmon"
+    },
+    {
+      "id": "pancakes",
+      "description": "A stack of fluffy pancakes with syrup and berries.",
+      "imageUrl": "https://images.unsplash.com/photo-1619592982366-ed3d55927817?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwYW5jYWtlcyUyMHN0YWNrfGVufDB8fHx8MTc1OTQ4NDU2NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pancakes stack"
+    }
+  ]
+}
