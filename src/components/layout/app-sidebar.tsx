@@ -64,18 +64,7 @@ export function AppSidebar() {
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              isActive={isActive('/ai-generator')}
-              tooltip="Generador IA"
-            >
-              <Link href="/ai-generator">
-                <Sparkles />
-                <span>Generador IA</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild

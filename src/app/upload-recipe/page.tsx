@@ -53,11 +53,11 @@ export default function UploadRecipePage() {
                     <Input placeholder="Ingrediente (ej., Harina)" />
                     <Button variant="outline" size="icon"><Trash2 className="h-4 w-4"/></Button>
                 </div>
-                 <div className="flex gap-2">
-                    <Input value="2" />
-                    <Input value="Huevos grandes" />
-                    <Button variant="outline" size="icon"><Trash2 className="h-4 w-4"/></Button>
-                </div>
+                                  <div className="flex gap-2">
+                                     <Input defaultValue="2" />
+                                     <Input defaultValue="Huevos grandes" />
+                                     <Button variant="outline" size="icon"><Trash2 className="h-4 w-4" /></Button>
+                                 </div>
               </div>
               <Button variant="outline" size="sm"><Plus className="mr-2 h-4 w-4"/>Añadir Ingrediente</Button>
             </div>
