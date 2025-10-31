@@ -1,3 +1,4 @@
+'use client';
 import { RecipeList } from '@/components/recipes/recipe-list';
 import { Input } from '@/components/ui/input';
 import {
@@ -9,8 +10,18 @@ import {
 } from '@/components/ui/select';
 import { recipes } from '@/lib/recipes';
 import { Filter, Search } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDiet, setSelectedDiet] = useState('');
+
+  const filteredRecipes = recipes.filter((recipe) => {
+    const searchMatch = recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.item.toLowerCase().includes(searchQuery.toLowerCase()));
+    const dietMatch = selectedDiet ? recipe.tags.includes(selectedDiet) : true;
+    return searchMatch && dietMatch;
+  });
+
   return (
     <div className="flex flex-1 flex-col">
       <main className="flex-1 bg-background p-4 md:p-6">
@@ -31,10 +42,12 @@ export default function Home() {
                 type="search"
                 placeholder="Buscar por palabras clave, ingredientes..."
                 className="w-full rounded-lg bg-card pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <div className="flex items-center gap-4">
-              <Select>
+              <Select onValueChange={setSelectedDiet}>
                 <SelectTrigger className="w-full sm:w-[200px] rounded-lg bg-card">
                   <div className="flex items-center gap-2">
                     <Filter className="h-4 w-4" />
@@ -50,7 +63,7 @@ export default function Home() {
               </Select>
             </div>
           </div>
-          <RecipeList recipes={recipes} />
+          <RecipeList recipes={filteredRecipes} />
         </div>
       </main>
     </div>
