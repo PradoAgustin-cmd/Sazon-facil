@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Providers } from './providers';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { AppHeader } from '@/components/layout/app-header';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
@@ -30,14 +31,16 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
-        <SidebarProvider>
-          <AppSidebar />
-          <div className="flex min-h-svh flex-col">
-            <AppHeader />
-            <SidebarInset>{children}</SidebarInset>
-          </div>
-          <Toaster />
-        </SidebarProvider>
+        <Providers>
+          <SidebarProvider>
+            <AppSidebar />
+            <div className="flex min-h-svh flex-col">
+              <AppHeader />
+              <SidebarInset>{children}</SidebarInset>
+            </div>
+            <Toaster />
+          </SidebarProvider>
+        </Providers>
       </body>
     </html>
   );

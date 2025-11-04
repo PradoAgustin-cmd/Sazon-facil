@@ -1,7 +1,8 @@
 'use client';
 
+import { useFavorites } from '@/context/favorites-context';
 import { RecipeList } from '@/components/recipes/recipe-list';
-import { recipes } from '@/lib/recipes';
+import { useRecipes } from '@/context/recipes-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useEffect, useState } from 'react';
 import { auth } from '@/lib/firebase';
@@ -9,6 +10,8 @@ import type { User } from 'firebase/auth';
 import Link from 'next/link';
 
 export default function ProfilePage() {
+  const { recipes } = useRecipes();
+  const { favoriteIds } = useFavorites();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,8 +24,8 @@ export default function ProfilePage() {
     return () => unsubscribe();
   }, []);
 
-  const favoriteRecipes = recipes.slice(0, 3);
-  const cookingHistory = recipes.slice(3, 5);
+  const favoriteRecipes = recipes.filter((recipe) => favoriteIds.includes(recipe.id));
+  const cookingHistory = recipes.slice(3, 5); // This is still hardcoded
 
   if (loading) {
     return (

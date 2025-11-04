@@ -1,4 +1,7 @@
-import { recipes } from '@/lib/recipes';
+
+'use client';
+
+import { useRecipes } from '@/context/recipes-context';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -7,14 +10,40 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { Clock, Users, Soup, Heart } from 'lucide-react';
+import { Clock, Users, Soup, Heart, Download } from 'lucide-react';
+import jsPDF from 'jspdf';
 
 export default function RecipePage({ params }: { params: { id: string } }) {
+  const { recipes } = useRecipes();
   const recipe = recipes.find((r) => r.id === params.id);
 
   if (!recipe) {
-    notFound();
+    return (
+      <main className="flex-1 p-4 md:p-6">
+        <div className="mx-auto max-w-4xl text-center">
+          <h1 className="font-headline text-3xl font-bold">Receta no encontrada</h1>
+          <p className="mt-2 text-muted-foreground">
+            La receta que estás buscando no existe o ha sido eliminada.
+          </p>
+        </div>
+      </main>
+    );
   }
+
+  const handleDownloadPdf = () => {
+    const doc = new jsPDF();
+    doc.text(recipe.name, 10, 10);
+    doc.text(recipe.description, 10, 20);
+    doc.text('Ingredientes', 10, 30);
+    recipe.ingredients.forEach((ing, i) => {
+      doc.text(`${ing.amount} ${ing.item}`, 10, 40 + i * 10);
+    });
+    doc.text('Instrucciones', 10, 40 + recipe.ingredients.length * 10 + 10);
+    recipe.instructions.forEach((step, i) => {
+      doc.text(`${i + 1}. ${step}`, 10, 40 + recipe.ingredients.length * 10 + 20 + i * 10);
+    });
+    doc.save(`${recipe.name}.pdf`);
+  };
 
   const placeholder = PlaceHolderImages.find((p) => p.id === recipe.image) ?? {
     imageUrl: 'https://picsum.photos/seed/placeholder/1200/800',
@@ -69,9 +98,6 @@ export default function RecipePage({ params }: { params: { id: string } }) {
         
         <div className="mb-8 flex items-center justify-between">
             <p className="text-muted-foreground max-w-2xl">{recipe.description}</p>
-            <Button size="lg">
-                Iniciar Cocina Guiada
-            </Button>
         </div>
 
 
@@ -105,9 +131,12 @@ export default function RecipePage({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center flex justify-center gap-4">
             <Button variant="outline" size="lg">
                 <Heart className="mr-2 h-5 w-5"/> Añadir a Favoritos
+            </Button>
+            <Button variant="outline" size="lg" onClick={handleDownloadPdf}>
+                <Download className="mr-2 h-5 w-5"/> Descargar PDF
             </Button>
         </div>
       </div>

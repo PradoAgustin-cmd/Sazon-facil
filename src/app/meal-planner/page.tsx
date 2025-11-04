@@ -1,3 +1,8 @@
+
+'use client';
+
+import { ShoppingListDialog } from '@/components/meal-planner/shopping-list-dialog';
+import { AddRecipeDialog } from '@/components/meal-planner/add-recipe-dialog';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -6,11 +11,26 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import type { Recipe } from '@/lib/types';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
 const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+const meals = ['Desayuno', 'Almuerzo', 'Cena'];
 
 export default function MealPlannerPage() {
+  const [mealPlan, setMealPlan] = useState<Record<string, Record<string, Recipe | null>>>({});
+
+  const handleSelectRecipe = (day: string, meal: string, recipe: Recipe) => {
+    setMealPlan((prev) => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [meal]: recipe,
+      },
+    }));
+  };
+
   return (
     <main className="flex-1 p-4 md:p-6">
       <div className="mx-auto max-w-7xl">
@@ -23,7 +43,9 @@ export default function MealPlannerPage() {
               Planifica tus comidas para la semana y genera una lista de compras.
             </p>
           </div>
-          <Button>Generar Lista de Compras</Button>
+          <ShoppingListDialog mealPlan={mealPlan}>
+            <Button>Generar Lista de Compras</Button>
+          </ShoppingListDialog>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
           {days.map((day) => (
@@ -32,37 +54,40 @@ export default function MealPlannerPage() {
                 <CardTitle className="font-headline text-lg">{day}</CardTitle>
               </CardHeader>
               <CardContent className="flex-1 space-y-4">
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-sm">Desayuno</h3>
-                  <Card className="border-dashed">
-                    <CardContent className="p-4 text-center text-sm text-muted-foreground">
-                      <Button variant="ghost" size="sm" className="w-full">
-                        <Plus className="mr-2 h-4 w-4" /> Añadir receta
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-sm">Almuerzo</h3>
-                   <Card className="border-dashed">
-                    <CardContent className="p-4 text-center text-sm text-muted-foreground">
-                      <Button variant="ghost" size="sm" className="w-full">
-                        <Plus className="mr-2 h-4 w-4" /> Añadir receta
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-sm">Cena</h3>
-                   <Card>
-                    <CardHeader className="p-2">
-                        <CardTitle className="text-xs">Ensalada de Pasta de Verano</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-2 pt-0 text-xs text-muted-foreground">
-                        Una comida rápida y fácil.
-                    </CardContent>
-                   </Card>
-                </div>
+                {meals.map((meal) => {
+                  const recipe = mealPlan[day]?.[meal];
+                  return (
+                    <div key={meal} className="space-y-2">
+                      <h3 className="font-semibold text-sm">{meal}</h3>
+                      {recipe ? (
+                        <Card>
+                          <CardHeader className="p-2">
+                            <CardTitle className="text-xs">{recipe.name}</CardTitle>
+                          </CardHeader>
+                          <CardContent className="p-2 pt-0 text-xs text-muted-foreground">
+                            {recipe.description}
+                          </CardContent>
+                        </Card>
+                      ) : (
+                        <Card className="border-dashed">
+                          <CardContent className="p-4 text-center text-sm text-muted-foreground">
+                            <AddRecipeDialog
+                              onSelect={(r) => handleSelectRecipe(day, meal, r)}
+                            >
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="w-full"
+                              >
+                                <Plus className="mr-2 h-4 w-4" /> Añadir receta
+                              </Button>
+                            </AddRecipeDialog>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </div>
+                  );
+                })}
               </CardContent>
             </Card>
           ))}
@@ -71,3 +96,4 @@ export default function MealPlannerPage() {
     </main>
   );
 }
+

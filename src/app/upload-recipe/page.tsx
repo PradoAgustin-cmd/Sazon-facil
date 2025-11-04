@@ -1,5 +1,7 @@
 'use client';
 
+import { useRecipes } from '@/context/recipes-context';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,6 +11,8 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export default function UploadRecipePage() {
+  const { addRecipe } = useRecipes();
+  const router = useRouter();
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
   const [prepTime, setPrepTime] = useState('');
@@ -40,17 +44,20 @@ export default function UploadRecipePage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const recipeData = {
+    const newRecipe = {
+      id: Date.now().toString(), // Simple unique ID
       name: recipeName,
       description,
       prepTime,
       cookTime,
-      servings,
+      servings: parseInt(servings, 10),
       ingredients,
       instructions,
-      image,
+      tags: [], // User can't add tags in this form yet
+      image: '', // Image upload is not fully implemented
     };
-    console.log(recipeData);
+    addRecipe(newRecipe);
+    router.push(`/recipes/${newRecipe.id}`);
   };
 
   return (
@@ -123,7 +130,7 @@ export default function UploadRecipePage() {
                   <Label htmlFor="image">Imagen de la Receta</Label>
                   <Input id="image" type="file" onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)} />
               </div>
-              <Button type="submit" size="lg" className="w-full">Enviar para Revisión</Button>
+              <Button type="submit" size="lg" className="w-full">Añadir Receta</Button>
             </CardContent>
           </form>
         </Card>

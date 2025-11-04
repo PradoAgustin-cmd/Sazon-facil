@@ -11,16 +11,18 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { Recipe } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useFavorites } from '@/context/favorites-context';
 import { Clock, Heart } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useState } from 'react';
 
 type RecipeCardProps = {
   recipe: Recipe;
 };
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
-  const [isFavorited, setIsFavorited] = useState(false);
+  const { favoriteIds, toggleFavorite } = useFavorites();
+  const isFavorited = favoriteIds.includes(recipe.id);
+
   const placeholder = PlaceHolderImages.find((p) => p.id === recipe.image) ?? {
     imageUrl: 'https://picsum.photos/seed/placeholder/600/400',
     imageHint: 'food placeholder',
@@ -57,7 +59,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           <Clock className="h-4 w-4" />
           <span>{recipe.prepTime}</span>
         </div>
-        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-red-500" onClick={() => setIsFavorited(!isFavorited)}>
+        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-red-500" onClick={() => toggleFavorite(recipe.id)}>
             <Heart className={`h-5 w-5 ${isFavorited ? 'text-red-500 fill-current' : ''}`}/>
             <span className="sr-only">Favorito</span>
         </Button>

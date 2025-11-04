@@ -8,11 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { recipes } from '@/lib/recipes';
+import { useRecipes } from '@/context/recipes-context';
 import { Filter, Search } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Home() {
+  const { recipes } = useRecipes();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDiet, setSelectedDiet] = useState('');
 
