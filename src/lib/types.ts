@@ -9,4 +9,6 @@ export type Recipe = {
   servings: number;
   tags: string[];
   image: string;
+  authorName: string;
+  userId: string;
 };
