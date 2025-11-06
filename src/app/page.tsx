@@ -10,17 +10,48 @@ import {
 } from '@/components/ui/select';
 import { useRecipes } from '@/context/recipes-context';
 import { Filter, Search } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+// Sinónimos en español para hacer que la búsqueda también coincida con tags conocidos
+const TAG_SYNONYMS: Record<string, string[]> = {
+  'vegetarian': ['vegetariana', 'vegetariano', 'vegetarian'],
+  'vegan': ['vegana', 'vegano', 'vegan'],
+  'gluten-free': ['sin gluten', 'gluten free', 'gluten-free'],
+  'keto': ['keto', 'cetogénica', 'cetogenica'],
+};
 
 export default function Home() {
   const { recipes } = useRecipes();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDiet, setSelectedDiet] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+
+  // Read tag from query (?tag=...) on mount (client side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get('tag');
+      if (t) setSelectedTag(t);
+    }
+  }, []);
 
   const filteredRecipes = recipes.filter((recipe) => {
-    const searchMatch = recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.item.toLowerCase().includes(searchQuery.toLowerCase()));
+    const q = searchQuery.toLowerCase();
+    const searchMatch =
+      q === '' ||
+      recipe.name.toLowerCase().includes(q) ||
+      recipe.ingredients.some((ingredient) =>
+        ingredient.item.toLowerCase().includes(q)
+      ) ||
+      recipe.tags.some((tag) => {
+        const t = tag.toLowerCase();
+        if (t.includes(q)) return true;
+        const synonyms = TAG_SYNONYMS[tag] || TAG_SYNONYMS[t] || [];
+        return synonyms.some((s) => s.toLowerCase().includes(q));
+      });
     const dietMatch = selectedDiet ? recipe.tags.includes(selectedDiet) : true;
-    return searchMatch && dietMatch;
+    const tagMatch = selectedTag ? recipe.tags.includes(selectedTag) : true;
+    return searchMatch && dietMatch && tagMatch;
   });
 
   return (
@@ -47,7 +78,7 @@ export default function Home() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
               <Select onValueChange={setSelectedDiet}>
                 <SelectTrigger className="w-full sm:w-[200px] rounded-lg bg-card">
                   <div className="flex items-center gap-2">
@@ -62,6 +93,16 @@ export default function Home() {
                   <SelectItem value="keto">Keto</SelectItem>
                 </SelectContent>
               </Select>
+              {selectedTag && (
+                <div className="flex items-center gap-2 text-sm bg-card border rounded px-3 py-1">
+                  <span>Tag: <strong className="capitalize">{selectedTag}</strong></span>
+                  <button
+                    onClick={() => setSelectedTag('')}
+                    className="text-muted-foreground hover:text-foreground"
+                    aria-label="Quitar filtro de tag"
+                  >✕</button>
+                </div>
+              )}
             </div>
           </div>
           <RecipeList recipes={filteredRecipes} />

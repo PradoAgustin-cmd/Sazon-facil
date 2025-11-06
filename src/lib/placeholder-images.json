@@ -59,6 +59,42 @@
       "description": "A stack of fluffy pancakes with syrup and berries.",
       "imageUrl": "https://images.unsplash.com/photo-1619592982366-ed3d55927817?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwYW5jYWtlcyUyMHN0YWNrfGVufDB8fHx8MTc1OTQ4NDU2NXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "pancakes stack"
+    },
+    {
+      "id": "chicken-milanesa",
+      "description": "Milanesas de pollo crujientes con papas fritas",
+      "imageUrl": "https://alicante.com.ar/wp-content/uploads/2022/06/jpeg-optimizer_iStock-1057832648-1.jpg",
+      "imageHint": "Milanesas de pollo doradas con guarnición de papas fritas"
+    },
+    {
+      "id": "empanadas-carne",
+      "description": "Empanadas argentinas de carne",
+      "imageUrl": "https://media.mdzol.com/p/7abc7d96a4bf7ebee18069c3747a3a28/adjuntos/373/imagenes/000/563/0000563108/760x0/smart/foto-gentileza.jpg",
+      "imageHint": "Empanadas doradas recién horneadas"
+    },
+    {
+      "id": "locro",
+      "description": "Locro argentino tradicional",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIaV-8f5n_jCa2lFrwOQ502AUW2Kp7LpLG-A&s",
+      "imageHint": "Locro caliente servido en cazuela de barro"
+    },
+    {
+      "id": "humita-chala",
+      "description": "Humitas en chala caseras",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBsPMDz05aYANUmAYQ03Fk-pUNErG2jWJnXg&s",
+      "imageHint": "Humitas envueltas en hojas de choclo"
+    },
+    {
+      "id": "matambre-pizza",
+      "description": "Matambre a la pizza con mozzarella y tomates",
+      "imageUrl": "https://resizer.glanacion.com/resizer/v2/-VLGTYSNHRVCQPFTIAMHXJOXKWE.jpg?auth=a1f21f4c8187c8c5d58eeeb99e1d34ba988c723903f98da3a982091395b1420e&width=420&height=280&quality=70&smart=true",
+      "imageHint": "Matambre a la pizza con queso gratinado y tomates cherry"
+    },
+    {
+      "id": "provoleta",
+      "description": "Provoleta al horno con hierbas",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwe5uPcZYu-ThVlU0FSUr0Hx9yDqLKPzY0ZQ&s",
+      "imageHint": "Provoleta derretida con orégano y aceite de oliva"
     }
   ]
 }

@@ -15,34 +15,78 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
 } from 'firebase/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [checkingRedirect, setCheckingRedirect] = useState(true);
+
+  // Revisa si viene de un redirect (por ejemplo en WebView donde popup falla)
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          router.push('/');
+        }
+      })
+      .catch((err) => {
+        // No es crítico; simplemente continúa con flujo normal
+        console.warn('Redirect result error', err);
+      })
+      .finally(() => setCheckingRedirect(false));
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/');
-    } catch (error) {
-      console.error('Error during email/password login:', error);
-      // You could show an error message to the user here
+    } catch (error: any) {
+      const code = error?.code as string | undefined;
+      if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/invalid-email' || code === 'auth/user-not-found') {
+        setErrorMsg('Credenciales inválidas. Verifica el correo y la contraseña.');
+      } else {
+        setErrorMsg('No se pudo iniciar sesión. Intenta nuevamente.');
+      }
+      console.error('Error durante inicio de sesión:', error);
     }
   };
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
+    setErrorMsg(null);
     try {
       await signInWithPopup(auth, provider);
       router.push('/');
-    } catch (error) {
-      console.error('Error during Google login:', error);
+    } catch (error: any) {
+      // En WebView/Android a veces el popup no está soportado: usa redirect de respaldo
+      const code = error?.code as string | undefined;
+      const fallbackCodes = new Set([
+        'auth/operation-not-supported-in-this-environment',
+        'auth/popup-blocked',
+        'auth/popup-closed-by-user',
+      ]);
+      try {
+        if (!code || fallbackCodes.has(code)) {
+          await signInWithRedirect(auth, provider);
+          return; // Navegará de vuelta con getRedirectResult
+        }
+        // Otros errores: muestra mensaje genérico
+        setErrorMsg('No se pudo iniciar sesión con Google.');
+        console.error('Error durante login con Google (no fallback):', error);
+      } catch (redirectErr) {
+        setErrorMsg('No se pudo iniciar sesión con Google.');
+        console.error('Error durante login con Google (redirect):', redirectErr);
+      }
     }
   };
 
@@ -57,6 +101,9 @@ export default function LoginPage() {
       <CardContent>
         <form onSubmit={handleLogin}>
           <div className="grid gap-4">
+            {errorMsg && (
+              <div className="text-sm text-red-600" role="alert">{errorMsg}</div>
+            )}
             <div className="grid gap-2">
               <Label htmlFor="email">Correo Electrónico</Label>
               <Input
@@ -94,8 +141,9 @@ export default function LoginPage() {
               className="w-full"
               onClick={handleGoogleLogin}
               type="button"
+              disabled={checkingRedirect}
             >
-              Iniciar Sesión con Google
+              {checkingRedirect ? 'Verificando...' : 'Iniciar Sesión con Google'}
             </Button>
           </div>
         </form>

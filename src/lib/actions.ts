@@ -1,9 +1,5 @@
 'use server';
 
-import {
-  generateRecipeFromDescription,
-  type GenerateRecipeFromDescriptionOutput,
-} from '@/ai/flows/generate-recipe-from-description';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -17,7 +13,7 @@ export interface GenerateRecipeActionState {
   errors?: {
     description?: string[];
   } | null;
-  recipe?: GenerateRecipeFromDescriptionOutput | null;
+  recipe?: unknown | null;
 }
 
 export async function generateRecipeAction(
@@ -36,17 +32,10 @@ export async function generateRecipeAction(
     };
   }
 
-  try {
-    const recipe = await generateRecipeFromDescription({
-      description: validatedFields.data.description,
-    });
-    return { message: 'success', recipe, errors: null };
-  } catch (error) {
-    console.error(error);
-    return {
-      message: 'La generación de IA falló. Por favor, inténtalo de nuevo.',
-      recipe: null,
-      errors: null,
-    };
-  }
+  // IA deshabilitada en esta build offline/APK. Devolver un mensaje amable.
+  return {
+    message: 'Generación por IA deshabilitada en esta versión (offline) — próximamente.',
+    recipe: null,
+    errors: null,
+  };
 }
