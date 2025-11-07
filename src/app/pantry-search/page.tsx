@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/card";
 import { X } from "lucide-react";
 import { useRecipes } from "@/context/recipes-context";
-import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { RecipeList } from "@/components/recipes/recipe-list";
+import { Badge } from "@/components/ui/badge";
 
 export default function PantrySearchPage() {
   const { recipes } = useRecipes();
@@ -39,17 +39,37 @@ export default function PantrySearchPage() {
 
   const suggestedRecipes = recipes
     .map((recipe) => {
-      const matchCount = recipe.ingredients.filter((recipeIngredient) =>
-        ingredients.some((userIngredient) =>
+      const matchCount = ingredients.filter((userIngredient) =>
+        recipe.ingredients.some((recipeIngredient) =>
           recipeIngredient.item
             .toLowerCase()
-            .includes(userIngredient.toLowerCase())
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(
+              userIngredient
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+            )
         )
       ).length;
       return { ...recipe, matchCount };
     })
     .filter((recipe) => recipe.matchCount > 0)
     .sort((a, b) => b.matchCount - a.matchCount);
+  {
+    ingredients.map((ingredient) => (
+      <Badge key={ingredient} variant="secondary" className="text-sm">
+        {ingredient}
+        <button
+          className="ml-1 hover:text-destructive"
+          onClick={() => handleRemoveIngredient(ingredient)}
+        >
+          <X className="h-3 w-3" />
+        </button>
+      </Badge>
+    ));
+  }
 
   return (
     <main className="flex-1 p-4 md:p-6">

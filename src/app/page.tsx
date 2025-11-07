@@ -14,9 +14,9 @@ import { useState, useEffect } from 'react';
 
 // Sinónimos en español para hacer que la búsqueda también coincida con tags conocidos
 const TAG_SYNONYMS: Record<string, string[]> = {
-  'vegetarian': ['vegetariana', 'vegetariano', 'vegetarian'],
-  'vegan': ['vegana', 'vegano', 'vegan'],
-  'gluten-free': ['sin gluten', 'gluten free', 'gluten-free'],
+  'vegetariana': ['vegetariana', 'vegetariano', 'vegetarian'],
+  'vegana': ['vegana', 'vegano', 'vegan'],
+  'sin-gluten': ['sin gluten', 'gluten free', 'gluten-free'],
   'keto': ['keto', 'cetogénica', 'cetogenica'],
 };
 
@@ -49,7 +49,11 @@ export default function Home() {
         const synonyms = TAG_SYNONYMS[tag] || TAG_SYNONYMS[t] || [];
         return synonyms.some((s) => s.toLowerCase().includes(q));
       });
-    const dietMatch = selectedDiet ? recipe.tags.includes(selectedDiet) : true;
+    const dietMatch = selectedDiet
+      ? recipe.tags.some(recipeTag =>
+          (TAG_SYNONYMS[selectedDiet] || []).includes(recipeTag.toLowerCase())
+        )
+      : true;
     const tagMatch = selectedTag ? recipe.tags.includes(selectedTag) : true;
     return searchMatch && dietMatch && tagMatch;
   });
@@ -87,9 +91,9 @@ export default function Home() {
                   </div>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="vegetarian">Vegetariana</SelectItem>
-                  <SelectItem value="vegan">Vegana</SelectItem>
-                  <SelectItem value="gluten-free">Sin Gluten</SelectItem>
+                  <SelectItem value="vegetariana">Vegetariana</SelectItem>
+                  <SelectItem value="vegana">Vegana</SelectItem>
+                  <SelectItem value="sin-gluten">Sin Gluten</SelectItem>
                   <SelectItem value="keto">Keto</SelectItem>
                 </SelectContent>
               </Select>

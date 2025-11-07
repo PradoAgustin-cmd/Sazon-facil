@@ -106,9 +106,15 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Ajustes">
-              <Settings />
-              <span>Ajustes</span>
+            <SidebarMenuButton
+              asChild
+              isActive={isActive('/settings')}
+              tooltip="Ajustes"
+            >
+              <Link href="/settings">
+                <Settings />
+                <span>Ajustes</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

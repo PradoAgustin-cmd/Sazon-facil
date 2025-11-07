@@ -68,7 +68,9 @@ export function AppHeader() {
             <DropdownMenuItem asChild>
               <Link href="/profile">Perfil</Link>
             </DropdownMenuItem>
-            {/* <DropdownMenuItem>Ajustes</DropdownMenuItem> */}
+            <DropdownMenuItem asChild>
+              <Link href="/settings">Ajustes</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             {userEmail ? (
               <DropdownMenuItem onClick={handleLogout}>

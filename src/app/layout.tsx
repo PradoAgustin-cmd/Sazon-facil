@@ -1,28 +1,28 @@
-import type { Metadata, Viewport } from 'next';
-import './globals.css';
-import { Providers } from './providers';
-import { AppSidebar } from '@/components/layout/app-sidebar';
-import { AppHeader } from '@/components/layout/app-header';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import { Toaster } from '@/components/ui/toaster';
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
+import { Providers } from "./providers";
+import { AppSidebar } from "@/components/layout/app-sidebar";
+import { AppHeader } from "@/components/layout/app-header";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Sazón Fácil',
-  description: 'Tu compañero para una cocina fácil y deliciosa.',
-  manifest: '/manifest.json',
+  title: "Sazón Fácil",
+  description: "Tu compañero para una cocina fácil y deliciosa.",
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
-    title: 'Sazón Fácil',
+    statusBarStyle: "default",
+    title: "Sazón Fácil",
   },
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#f97316',
-  viewportFit: 'cover',
+  themeColor: "#f97316",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -47,7 +47,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
-  <body className="font-body antialiased" suppressHydrationWarning>
+      <body className="font-body antialiased" suppressHydrationWarning>
         <Providers>
           <SidebarProvider>
             <AppSidebar />
