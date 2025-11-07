@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "797244849017-jnsmcdp3jq3uttifg3vqm0j15h4pcjco.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sazon.facil",
+            "certificate_hash": "e6510c96ac9aea4b1b3afab5b1ed735418ef2129"
+          }
+        },
+        {
           "client_id": "797244849017-ncl9vi78olp0trvvi6uapg8blmh33jls.apps.googleusercontent.com",
           "client_type": 3
         }

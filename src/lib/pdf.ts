@@ -1,5 +1,8 @@
 import jsPDF from 'jspdf';
 import type { Recipe } from './types';
+import { Capacitor } from '@capacitor/core';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 // Sanitiza nombre de archivo removiendo caracteres inseguros
 function safeFileName(name: string) {
@@ -90,10 +93,31 @@ export async function downloadRecipePDF(recipe: Recipe) {
     });
 
     const fileName = safeFileName(recipe.name) + '.pdf';
-    doc.save(fileName);
+
+    // En Android/iOS, usar Capacitor Filesystem + Share
+    if (Capacitor.isNativePlatform()) {
+      const pdfOutput = doc.output('datauristring');
+      const base64Data = pdfOutput.split(',')[1];
+
+      const savedFile = await Filesystem.writeFile({
+        path: fileName,
+        data: base64Data,
+        directory: Directory.Cache
+      });
+
+      await Share.share({
+        title: recipe.name,
+        text: 'Receta exportada',
+        url: savedFile.uri,
+        dialogTitle: 'Compartir receta'
+      });
+    } else {
+      // En web, descarga normal
+      doc.save(fileName);
+    }
   } catch (err) {
     console.error('Error generando PDF', err);
-    // Silencioso para no romper UX en móvil
+    alert('Error al generar PDF: ' + (err instanceof Error ? err.message : 'desconocido'));
   }
 }
 
