@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "797244849017",
-    "project_id": "studio-5680256479-bae09",
-    "storage_bucket": "studio-5680256479-bae09.firebasestorage.app"
+    "project_number": "541452954884",
+    "project_id": "sazon-facil",
+    "storage_bucket": "sazon-facil.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:797244849017:android:f844feee7c06861d8fcda8",
+        "mobilesdk_app_id": "1:541452954884:android:a2ce45f7ca836e8c307451",
         "android_client_info": {
-          "package_name": "com.sazon.facil"
+          "package_name": "com.company.SazonFacil"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "797244849017-jnsmcdp3jq3uttifg3vqm0j15h4pcjco.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.sazon.facil",
-            "certificate_hash": "e6510c96ac9aea4b1b3afab5b1ed735418ef2129"
-          }
-        },
-        {
-          "client_id": "797244849017-ncl9vi78olp0trvvi6uapg8blmh33jls.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDX1zoo-8JZ4KOTlTrqO2hCMd1Is7_N3qc"
+          "current_key": "AIzaSyDWNyRW4iXXyDvEwmnsnCyGPM-s4g0VN_g"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "797244849017-ncl9vi78olp0trvvi6uapg8blmh33jls.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
